@@ -260,16 +260,14 @@ def main():
 
     seed_everything(opt.seed)
 
-    # device = torch.device("cuda:{}".format(opt.gpu_id)) if torch.cuda.is_available() else torch.device("cpu")
-    # torch.cuda.set_device(device)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
     if device.type == "cuda":
-        torch.cuda.set_device(device)
+        torch.cuda.set_device(0)
     else:
         raise RuntimeError(
             "CUDA GPU was not detected. This inference path is memory-intensive and CPU runs often fail with OOM. "
-            "Use a CUDA-enabled PyTorch environment and GPU, or run a low-memory smoke test with "
-            "--H 256 --W 192 --n_samples 1 --n_imgs 1."
+            "Use a CUDA-enabled PyTorch environment and GPU."
         )
 
     config = OmegaConf.load(f"{opt.config}")
