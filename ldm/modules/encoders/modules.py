@@ -153,11 +153,8 @@ class FrozenCLIPImageEmbedder(AbstractEncoder):
         super().__init__()
 
         # FORCE LOCAL PATH
-        version = "./pretrained/clip-vit-large-patch14"
-
         self.transformer = CLIPVisionModel.from_pretrained(
-            version,
-            local_files_only=True
+            "openai/clip-vit-large-patch14"
         )
 
         self.final_ln = LayerNorm(1024)
